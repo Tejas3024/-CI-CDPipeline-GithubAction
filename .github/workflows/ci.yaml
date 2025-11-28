@@ -1,7 +1,8 @@
 name: CI pipeline
 
 on:
-  push:
+  schedule:
+    - cron: '* * * * *'  # Runs daily at midnight
 
 jobs:
   build:
