@@ -1,0 +1,25 @@
+{
+  "name": "githubaction",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start":"node index.js",
+    "test": "jtest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tejas3024/-CI-CDPipeline-GithubAction.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Tejas3024/-CI-CDPipeline-GithubAction/issues"
+  },
+  "homepage": "https://github.com/Tejas3024/-CI-CDPipeline-GithubAction#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
