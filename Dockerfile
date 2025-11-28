@@ -1,30 +1,37 @@
-name: Building a Docker Image (CI)
+# Stage 1: Builder
+FROM node:20-alpine AS builder
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+WORKDIR /app
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# Create dist folder
+RUN mkdir -p /app/dist
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# Copy package files first (better for caching)
+COPY package*.json ./
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+# Install dependencies
+RUN npm ci
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+# Copy application files
+COPY . .
 
-      - name: Build Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile
-          platforms: linux/amd64
-          push: false
-          tags: myapp:ci
+# Build the project (if build script exists)
+RUN npm run build --if-present
+
+
+# Stage 2: Production image
+FROM node:20-alpine AS prod
+
+WORKDIR /app
+
+# Copy build output from builder stage
+COPY --from=builder /app/dist ./dist
+
+# Copy package files
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Start the app
+CMD ["node", "dist/index.js"]
