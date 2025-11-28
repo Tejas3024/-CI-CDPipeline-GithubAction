@@ -1,8 +1,14 @@
-name: CI pipeline
+name: CI Pipeline
 
 on:
-  schedule:
-    - cron: '* * * * *'  # Runs every 1 minute
+  pull_request:
+    branches:
+      - main
+  
+
+env:
+  APP_ENV: production
+  LOG_LEVEL: debug
 
 jobs:
   build:
