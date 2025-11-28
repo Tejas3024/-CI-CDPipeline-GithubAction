@@ -2,7 +2,7 @@ name: CI pipeline
 
 on:
   schedule:
-    - cron: '* * * * *'  # Runs daily at midnight
+    - cron: '* * * * *'  # Runs every 1 minute
 
 jobs:
   build:
@@ -29,3 +29,4 @@ jobs:
 
       - name: Show Github Repository
         run: echo "${{ github.repository }}"
+
