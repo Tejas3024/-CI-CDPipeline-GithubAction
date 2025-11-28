@@ -1,13 +1,30 @@
-name: CI Pipeline
+name: CI pipeline
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: printing a message
+      - name: Printing a message
         run: echo "Hello, World!"
+
+      - name: Show Current time
+        run: date
+
+      - name: List files
+        run: ls -la
+
+      - name: Print Workflow event
+        run: echo "${{ github.event_name }}"
+
+      - name: Show GitHub workspace
+        run: echo "${{ github.workspace }}"
+
+      - name: Show Runner OS
+        run: echo "${{ runner.os }}"
+
+      - name: Show Github Repository
+        run: echo "${{ github.repository }}"
