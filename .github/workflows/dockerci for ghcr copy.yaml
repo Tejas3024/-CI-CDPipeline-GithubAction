@@ -1,0 +1,32 @@
+name: GHCR Docker Build (CI)
+
+on:
+  push:
+    branches:
+      - main
+  # pull_request:   # REMOVE if you don’t want 2 workflows
+  #   branches:
+  #     - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/tejas3024/myapp:latest .
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/tejas3024/myapp:latest
